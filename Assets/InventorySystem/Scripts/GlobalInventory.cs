@@ -14,7 +14,7 @@ public class GlobalInventory : MonoBehaviour {
     public GameObject SlotGO;
     public GameObject SlotGOBag;
 
-    public bool DroppedOnSlot;
+    public bool DroppedOnFilledSlot;
 
     #region Global
     public static GlobalInventory global = null;
@@ -29,19 +29,19 @@ public class GlobalInventory : MonoBehaviour {
 
     public void vSwapItemsUI() {
 
-        if (DroppedOnSlot) {
+        if (DroppedOnFilledSlot) {
             SlotX = SlotGO.transform.GetSiblingIndex();
             SlotGOBag = SlotGO.GetComponent<ItemUI>().Bag;
 
             DragGO.transform.SetSiblingIndex(SlotX);
             SlotGO.transform.SetSiblingIndex(DragX);
-            DroppedOnSlot = false;
+            DroppedOnFilledSlot = false;
         } 
     }
 
     public void vSwapISO() {
 
-        if (DroppedOnSlot) {
+        if (DroppedOnFilledSlot) {
             DragGO.GetComponent<ItemUI>().vRefreshISO(SlotISO);
             SlotGO.GetComponent<ItemUI>().vRefreshISO(DragISO);
         }

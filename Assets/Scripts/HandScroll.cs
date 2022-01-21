@@ -12,7 +12,7 @@ public class HandScroll : MonoBehaviour{
     void Update() {
 
         if (Input.GetAxis("Mouse ScrollWheel") < 0) { //Up
-            if (x >= SlotUI.childCount-1) {
+            if (x > SlotUI.childCount-1) {
                 x = 0;
             } else {
                x++;
@@ -24,14 +24,14 @@ public class HandScroll : MonoBehaviour{
             if (x > 0) {
                 x--;
             } else {
-                x = SlotUI.childCount - 1;
+                x = SlotUI.childCount -1;
             }
             ChangeX(x);
         }
     }
 
     public void ChangeX(int x) {
-        for (int i = 0; i <= SlotUI.childCount-1; i++) {
+        for (int i = 0; i < SlotUI.childCount; i++) {
             if (i == x) {
                 transform.GetChild(i).gameObject.SetActive(true);
                 SlotUI.GetChild(i).GetComponent<Image>().color = color;

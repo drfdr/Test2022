@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ItemUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IEndDragHandler {
+public class ItemUI : MonoBehaviour, IDragHandler, IEndDragHandler,IBeginDragHandler {
     public ItemSO ISO;
 
     [HideInInspector] public GameObject Bag;
@@ -11,6 +11,7 @@ public class ItemUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IEndDrag
     private RectTransform RT;
     private CanvasGroup CG;
     private GlobalInventory GI;
+    private bool bOnTopOncer;
 
 
 
@@ -23,16 +24,16 @@ public class ItemUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IEndDrag
         vRefreshISO(ISO);
     }
 
-    public void OnPointerDown(PointerEventData ED) {
+
+    public void OnBeginDrag(PointerEventData ED) {
         if (!(name == "Empty")) {
             CG.blocksRaycasts = false;
             CG.alpha = .5F;
             GI.DragGO = gameObject;
             GI.DragISO = ISO;
+            vOnTop();
         }
-        vOnTop();
     }
-
 
     public void OnDrag(PointerEventData ED) {
         if(!(name == "Empty")){

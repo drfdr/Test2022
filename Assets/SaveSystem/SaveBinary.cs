@@ -3,13 +3,13 @@ using System.IO;
 using UnityEngine;
 
 public static class SaveBinary {
-    public static void SaveData(PlayerData PD, SaveISO SISO) {
+    public static void SaveData(PlayerData PD, SaveISO HandSISO,SaveISO SideHandSISO) {
         BinaryFormatter formatter = new BinaryFormatter();
         string path = System.Environment.ExpandEnvironmentVariables("%USERPROFILE%\\Saved Games\\") + "TestGame.save";
 
         FileStream stream = new FileStream(path, FileMode.Create);
 
-        SaveSerializable SaveSerializableX = new SaveSerializable(PD,SISO);
+        SaveSerializable SaveSerializableX = new SaveSerializable(PD,HandSISO,SideHandSISO);
 
 
         formatter.Serialize(stream, SaveSerializableX);

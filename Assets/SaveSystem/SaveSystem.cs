@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class SaveSystem : MonoBehaviour{
     [SerializeField] private PlayerData PD;
-    [SerializeField] private SaveISO SISO;
+    [SerializeField] private SaveISO HandSISO;
+    [SerializeField] private SaveISO SideHandSISO;
     [SerializeField] private int ArrayLength;
      
     private void Start() {
@@ -10,7 +11,6 @@ public class SaveSystem : MonoBehaviour{
     }
 
     private void OnApplicationQuit() {
-
         SaveGame();
     }
 
@@ -25,18 +25,27 @@ public class SaveSystem : MonoBehaviour{
     }
 
     private void SaveGame() {
-        SISO.vSaveISO();
-        SaveBinary.SaveData(PD, SISO);
+        HandSISO.vSaveISO();
+        SideHandSISO.vSaveISO();
+        SaveBinary.SaveData(PD, HandSISO,SideHandSISO);
     }
 
     private void LoadGame() {
         SaveSerializable SaveSerializableX = SaveBinary.LoadData();
         PD.PlayerName = SaveSerializableX.PlayerName;
         PD.NumberOfClicks = SaveSerializableX.NumberOfClicks;
-        SISO.ISOArray = new string[10];
-        for (int i = 0; i < 10; i++) {
-            SISO.ISOArray[i] = SaveSerializableX.ISOArray[i];
+        //HandSISO
+        HandSISO.ISOArray = new string[SaveSerializableX.HandArrayLength];
+        for (int i = 0; i < SaveSerializableX.HandArrayLength; i++) {
+            HandSISO.ISOArray[i] = SaveSerializableX.HandISOArray[i];
                 }
-        SISO.vLoadISO();
+        HandSISO.vLoadISO();
+
+        //SideHandSISO
+        SideHandSISO.ISOArray = new string[SaveSerializableX.SideHandArrayLength];
+        for (int i = 0; i < SaveSerializableX.SideHandArrayLength; i++) {
+            SideHandSISO.ISOArray[i] = SaveSerializableX.SideHandISOArray[i];
+        }
+        SideHandSISO.vLoadISO();
     }
 }

@@ -15,12 +15,12 @@ public class ItemUISlot : MonoBehaviour,IDropHandler{
 
 
     public void OnDrop(PointerEventData ED) {
-        Debug.Log("OnDrop");
-        GI.DroppedOnSlot = true;
-        GI.SlotGO = gameObject;
-        GI.SlotISO = GetComponent<ItemUI>().ISO;
-        GI.vSwapISO();
-
+        if (!(GI.DragGO.name == "Empty")) {
+            Debug.Log("OnDrop");
+            GI.DroppedOnFilledSlot = true;
+            GI.SlotGO = gameObject;
+            GI.SlotISO = GetComponent<ItemUI>().ISO;
+            GI.vSwapISO();
+        }
     }
-
 }
