@@ -2,14 +2,14 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using UnityEngine;
 
-public static class SaveLoad {
-    public static void SaveData(PlayerData PD,SeedBox SB,SavableGOS SGOS) {
+public static class SaveBinary {
+    public static void SaveData(PlayerData PD, SaveISO SISO) {
         BinaryFormatter formatter = new BinaryFormatter();
         string path = System.Environment.ExpandEnvironmentVariables("%USERPROFILE%\\Saved Games\\") + "TestGame.save";
 
         FileStream stream = new FileStream(path, FileMode.Create);
 
-        SaveSerializable SaveSerializableX = new SaveSerializable(PD,SB,SGOS);
+        SaveSerializable SaveSerializableX = new SaveSerializable(PD,SISO);
 
 
         formatter.Serialize(stream, SaveSerializableX);

@@ -5,16 +5,14 @@ public class HandScroll : MonoBehaviour{
     [SerializeField] private int x;
 
     [Header("UI")]
-    [SerializeField] Transform InventoryBarGO;
+    [SerializeField] Transform SlotUI;
     [SerializeField] private Color color;
 
-    void Start() {
-    }
 
     void Update() {
 
         if (Input.GetAxis("Mouse ScrollWheel") < 0) { //Up
-            if (x >= 10-1) {//LimitTo10
+            if (x >= SlotUI.childCount-1) {
                 x = 0;
             } else {
                x++;
@@ -26,20 +24,20 @@ public class HandScroll : MonoBehaviour{
             if (x > 0) {
                 x--;
             } else {
-                x = 10-1;//LimitTo10
+                x = SlotUI.childCount - 1;
             }
             ChangeX(x);
         }
     }
 
     public void ChangeX(int x) {
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i <= SlotUI.childCount-1; i++) {
             if (i == x) {
                 transform.GetChild(i).gameObject.SetActive(true);
-                InventoryBarGO.GetChild(i).GetChild(0).GetComponent<Image>().color = color;
+                SlotUI.GetChild(i).GetComponent<Image>().color = color;
             } else {
                 transform.GetChild(i).gameObject.SetActive(false);
-                InventoryBarGO.GetChild(i).GetChild(0).GetComponent<Image>().color = Color.white;
+                SlotUI.GetChild(i).GetComponent<Image>().color = Color.black;
             }
         }
     }

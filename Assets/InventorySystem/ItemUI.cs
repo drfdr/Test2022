@@ -3,47 +3,41 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class ItemUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IEndDragHandler {
-
     public ItemSO ISO;
 
-    public GameObject Bag;
-
-    public int x;
-
-    private Image IMG;
+    [HideInInspector] public GameObject Bag;
+    private bool Hand;
     private GlobalLinks GL;
-    private Item sItem;
     private RectTransform RT;
     private CanvasGroup CG;
     private GlobalInventory GI;
 
 
-    private void Awake() {
-        RT = GetComponent<RectTransform>();
-        CG = GetComponent<CanvasGroup>();
-        IMG = GetComponent<Image>();
-        Bag = transform.parent.gameObject;
-    }
 
     private void Start() {
         GL = GlobalLinks.global;
         GI = GlobalInventory.global;
-        if (ISO) {
-            vRefreshISO(ISO);
-        }
+        RT = GetComponent<RectTransform>();
+        CG = GetComponent<CanvasGroup>();
+        Bag = transform.parent.gameObject;
+        vRefreshISO(ISO);
     }
 
     public void OnPointerDown(PointerEventData ED) {
-        CG.blocksRaycasts = false;
-        CG.alpha = .5F;
-        GI.DragGO = gameObject;
-        GI.DragISO = ISO;
+        if (!(name == "Empty")) {
+            CG.blocksRaycasts = false;
+            CG.alpha = .5F;
+            GI.DragGO = gameObject;
+            GI.DragISO = ISO;
+        }
+        vOnTop();
     }
 
 
     public void OnDrag(PointerEventData ED) {
-        RT.anchoredPosition += ED.delta;
-     
+        if(!(name == "Empty")){
+            RT.anchoredPosition += ED.delta;
+        }
     }
 
 
@@ -51,14 +45,7 @@ public class ItemUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IEndDrag
         CG.alpha = 1;
         CG.blocksRaycasts = true;
         vLayoutRebuild();
-    }
-
-    public void vLinkData() {
-        x = transform.GetSiblingIndex();
-        if (x <= Bag.transform.childCount - 1) {
-            sItem = Bag.transform.GetChild(x).GetComponent<Item>();
-            IMG.sprite = sItem.Image;
-        }
+        vOnTopEnd();
     }
 
     public void vRefreshISO(ItemSO ISO) {
@@ -69,5 +56,16 @@ public class ItemUI : MonoBehaviour, IPointerDownHandler, IDragHandler, IEndDrag
 
     public void vLayoutRebuild() {
         LayoutRebuilder.ForceRebuildLayoutImmediate(transform.parent.GetComponent<RectTransform>());
+    }
+
+    public void vOnTop() {
+        var canvas = gameObject.AddComponent<Canvas>();
+        canvas.overrideSorting = true;
+        canvas.sortingOrder = 2;
+        gameObject.AddComponent<GraphicRaycaster>();
+    }
+    public void vOnTopEnd() {
+        Destroy(GetComponent<GraphicRaycaster>());
+        Destroy(GetComponent<Canvas>());
     }
 }
