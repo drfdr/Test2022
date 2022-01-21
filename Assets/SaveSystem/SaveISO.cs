@@ -18,22 +18,22 @@ public class SaveISO : MonoBehaviour{
     public void vSaveISO() {
         ItemUI1 = transform.GetChild(0).GetComponent<ItemUI>();
         ItemUI2 = transform.GetChild(1).GetComponent<ItemUI>();
-        ItemUI3 = transform.GetChild(0).GetComponent<ItemUI>();
-        ItemUI4 = transform.GetChild(1).GetComponent<ItemUI>();
-        ItemUI5 = transform.GetChild(0).GetComponent<ItemUI>();
+        ItemUI3 = transform.GetChild(2).GetComponent<ItemUI>();
+        ItemUI4 = transform.GetChild(3).GetComponent<ItemUI>();
+        ItemUI5 = transform.GetChild(4).GetComponent<ItemUI>();
         ISO1 = ItemUI1.ISO.Name;
         ISO2 = ItemUI2.ISO.Name;
-        ISO3 = ItemUI1.ISO.Name;
-        ISO4 = ItemUI2.ISO.Name;
-        ISO5 = ItemUI1.ISO.Name;
+        ISO3 = ItemUI3.ISO.Name;
+        ISO4 = ItemUI4.ISO.Name;
+        ISO5 = ItemUI5.ISO.Name;
     }
 
     public void vLoadISO() {
         ItemUI1.vRefreshISO(Resources.Load<ItemSO>("ISO/" + ISO1));
         ItemUI2.vRefreshISO(Resources.Load<ItemSO>("ISO/" + ISO2));
-        ItemUI3.vRefreshISO(Resources.Load<ItemSO>("ISO/" + ISO1));
-        ItemUI4.vRefreshISO(Resources.Load<ItemSO>("ISO/" + ISO2));
-        ItemUI5.vRefreshISO(Resources.Load<ItemSO>("ISO/" + ISO1));
+        ItemUI3.vRefreshISO(Resources.Load<ItemSO>("ISO/" + ISO3));
+        ItemUI4.vRefreshISO(Resources.Load<ItemSO>("ISO/" + ISO4));
+        ItemUI5.vRefreshISO(Resources.Load<ItemSO>("ISO/" + ISO5));
 
     }
 }
