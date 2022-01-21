@@ -2,38 +2,23 @@ using UnityEngine;
 
 public class SaveISO : MonoBehaviour{
 
-    public ItemUI ItemUI1;
-    public ItemUI ItemUI2;
-    public ItemUI ItemUI3;
-    public ItemUI ItemUI4;
-    public ItemUI ItemUI5;
+    public ItemUI[] ItemUIArray;
 
-    public string ISO1;
-    public string ISO2;
-    public string ISO3;
-    public string ISO4;
-    public string ISO5;
+    public string[] ISOArray;
+
+    public int ArrayLength;
 
 
     public void vSaveISO() {
-        ItemUI1 = transform.GetChild(0).GetComponent<ItemUI>();
-        ItemUI2 = transform.GetChild(1).GetComponent<ItemUI>();
-        ItemUI3 = transform.GetChild(2).GetComponent<ItemUI>();
-        ItemUI4 = transform.GetChild(3).GetComponent<ItemUI>();
-        ItemUI5 = transform.GetChild(4).GetComponent<ItemUI>();
-        ISO1 = ItemUI1.ISO.Name;
-        ISO2 = ItemUI2.ISO.Name;
-        ISO3 = ItemUI3.ISO.Name;
-        ISO4 = ItemUI4.ISO.Name;
-        ISO5 = ItemUI5.ISO.Name;
+        ISOArray = new string[10];
+        for (int i = 0; i < 10; i++) {
+            ISOArray[i] = ItemUIArray[i].ISO.Name;
+        }
     }
 
     public void vLoadISO() {
-        ItemUI1.vRefreshISO(Resources.Load<ItemSO>("ISO/" + ISO1));
-        ItemUI2.vRefreshISO(Resources.Load<ItemSO>("ISO/" + ISO2));
-        ItemUI3.vRefreshISO(Resources.Load<ItemSO>("ISO/" + ISO3));
-        ItemUI4.vRefreshISO(Resources.Load<ItemSO>("ISO/" + ISO4));
-        ItemUI5.vRefreshISO(Resources.Load<ItemSO>("ISO/" + ISO5));
-
+        for (int i = 0; i < 10; i++) {
+            ItemUIArray[i].vRefreshISO(Resources.Load<ItemSO>("ISO/" + ISOArray[i]));
+        }
     }
 }

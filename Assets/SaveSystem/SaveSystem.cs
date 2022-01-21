@@ -3,11 +3,15 @@ using UnityEngine;
 public class SaveSystem : MonoBehaviour{
     [SerializeField] private PlayerData PD;
     [SerializeField] private SaveISO SISO;
+    [SerializeField] private int ArrayLength;
      
     private void Start() {
+        LoadGame();
     }
 
     private void OnApplicationQuit() {
+
+        SaveGame();
     }
 
 
@@ -29,11 +33,10 @@ public class SaveSystem : MonoBehaviour{
         SaveSerializable SaveSerializableX = SaveBinary.LoadData();
         PD.PlayerName = SaveSerializableX.PlayerName;
         PD.NumberOfClicks = SaveSerializableX.NumberOfClicks;
-        SISO.ISO1 = SaveSerializableX.ISO1;
-        SISO.ISO2 = SaveSerializableX.ISO2;
-        SISO.ISO3 = SaveSerializableX.ISO3;
-        SISO.ISO4 = SaveSerializableX.ISO4;
-        SISO.ISO5 = SaveSerializableX.ISO5;
+        SISO.ISOArray = new string[10];
+        for (int i = 0; i < 10; i++) {
+            SISO.ISOArray[i] = SaveSerializableX.ISOArray[i];
+                }
         SISO.vLoadISO();
     }
 }
